@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+  .sparkle {
+    position: fixed;
+    width: 5px;
+    height: 5px;
+    background: #ffd700;
+    border-radius: 50%;
+    pointer-events: none;
+    box-shadow: 0 0 10px #fff, 0 0 20px #ff66a3, 0 0 30px #ffd6e8;
+    animation: sparkleMove 4s linear infinite;
+    z-index: 9999;
+  }
+
+  @keyframes sparkleMove {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-100vh) scale(0.5);
+      opacity: 0;
+    }
+  }
+</style>
+<title>Secret Gallery</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ffd6e8, #d6ecff);
+    color: #444;
+  }
+  .screen {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    text-align: center;
+  }
+  .active {
+    display: flex;
+  }
+  /* Password screen */
+  .password-screen {
+    flex-direction: column;
+    background-color: rgba(255,255,255,0.85);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  }
+  .input-display {
+    font-size: 28px;
+    margin: 15px 0;
+    letter-spacing: 8px;
+  }
+  .keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 70px);
+    gap: 12px;
+    justify-content: center;
+  }
+  .key {
+    background: #ffb6d9;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    padding: 15px;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.2s;
+  }
+  .key:hover {
+    background: #ffa1cf;
+    transform: scale(1.05);
+  }
+
+  /* Main Menu */
+  .menu {
+    flex-direction: column;
+    gap: 20px;
+    animation: fadeIn 0.5s ease forwards;
+  }
+  h1 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    color: #ff66a3;
+    text-shadow: 0 0 5px #fff, 0 0 10px #ffe6f0;
+  }
+  .button-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  .menu-button {
+    background: linear-gradient(135deg, #ffd6e8, #d6ecff);
+    border: none;
+    border-radius: 15px;
+    padding: 15px 25px;
+    font-size: 18px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .menu-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  }
+
+  /* Image Screen */
+  .image-screen {
+    flex-direction: column;
+    gap: 20px;
+    animation: fadeIn 0.5s ease forwards;
+  }
+  .image-screen img {
+    max-width: 90%;
+    max-height: 70vh;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  }
+  .back-button {
+    background: #ffb6d9;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .back-button:hover {
+    background: #ffa1cf;
+  }
+
+  @keyframes fadeIn {
+    from {opacity:0; transform: translateY(20px);}
+    to {opacity:1; transform: translateY(0);}
+  }
+  .heart {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  background: pink;
+  border-radius: 50% 50% 0 0;
+  transform: rotate(-45deg);
+  pointer-events: none;
+  animation: floatUp 1.5s ease-out forwards;
+  z-index: 9999;
+  box-shadow: 0 0 8px #ff66a3;
+}
+
+.heart::after,
+.heart::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: pink;
+  border-radius: 50%;
+}
+
+.heart::before {
+  top: -10px;
+  left: 0;
+}
+
+.heart::after {
+  left: 10px;
+  top: 0;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(1) rotate(-45deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-80px) scale(0.5) rotate(-45deg);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+<body>
+<!-- Password Screen -->
+<div id="passwordScreen" class="screen password-screen active">
+  <h2>🔒 Enter Password</h2>
+  <div class="input-display" id="inputDisplay">••••</div>
+  <div class="keypad">
+    <button class="key" onclick="enterDigit('1')">1</button>
+    <button class="key" onclick="enterDigit('2')">2</button>
+    <button class="key" onclick="enterDigit('3')">3</button>
+    <button class="key" onclick="enterDigit('4')">4</button>
+    <button class="key" onclick="enterDigit('5')">5</button>
+    <button class="key" onclick="enterDigit('6')">6</button>
+    <button class="key" onclick="enterDigit('7')">7</button>
+    <button class="key" onclick="enterDigit('8')">8</button>
+    <button class="key" onclick="enterDigit('9')">9</button>
+    <div></div>
+    <button class="key" onclick="enterDigit('0')">0</button>
+    <div></div>
+  </div>
+</div>
+
+<!-- Main Menu Screen -->
+<div id="menuScreen" class="screen menu">
+<div style="background: #ffe6f0; padding: 10px; border-radius: 16px; box-shadow: 0 0 12px #ffb6c1;">
+  <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/6lCR7CNOC51Oj2IEaa1qvg" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+</div>
+  <div>
+    <h1>🪷  My birthday Gallery 🪷</h1>
+    <p>Select a button to view</p>
+  </div>
+  <div class="button-grid">
+    <button class="menu-button" onclick="openImage('msg1')">💌 A Message</button>
+    <button class="menu-button" onclick="openImage('img2')">2</button>
+    <button class="menu-button" onclick="openImage('img3')">3</button>
+    <button class="menu-button" onclick="openImage('img4')">4</button>
+  </div>
+</div>
+
+<!-- Image Screens -->
+<!-- Message Screen -->
+<div id="msg1" class="screen image-screen">
+  <div style="max-width: 600px; background-color: rgba(255,255,255,0.85); padding: 30px; border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.1);">
+    <h2 style="color: #ff66a3; font-size: 1.8rem; margin-bottom: 20px;">🎂 Happy Birthday, Autumn 🎂</h2>
+    <p style="font-size: 1.1rem; line-height: 1.6; color: #444;">
+      I truly hope this year brings you nothing but the kind of love and peace you deserve. You’re someone with a big heart and a sharp mind, and I know you’re meant to be surrounded by people who can see that and love you without conditions.<br><br>
+      My wish for you is that this year gives you more joy, more laughter, and more of the kind of moments that remind you you’re not alone in this world.<br><br>
+      You deserve all of that and more. Wishing you the very best always.
+    </p>
+    <button class="back-button" onclick="goBack()">⬅ Back to Menu</button>
+  </div>
+</div>
+<div id="img2" class="screen image-screen">
+  <img src="https://placekitten.com/801/500" alt=
+  Image 2"/>
+  <button class="back-button" onclick="goBack()">⬅ Back to Menu</button>
+</div>
+
+<div id="img3" class="screen image-screen">
+  <img src="https://placekitten.com/802/500" alt="Image 3"/>
+  <button class="back-button" onclick="goBack()">⬅ Back to Menu</button>
+</div>
+
+<div id="img4" class="screen image-screen">
+  <img src="https://placekitten.com/803/500" alt="Image 4"/>
+  <button class="back-button" onclick="goBack()">⬅ Back to Menu</button>
+</div>
+
+<script>
+  const correctPassword = '1909'; // change as desired
+  let input = '';
+
+  function enterDigit(digit) {
+    if (input.length < 4) input += digit;
+    document.getElementById('inputDisplay').textContent = input.padEnd(4, '•');
+    if (input.length === 4) {
+      if (input === correctPassword) {
+        showScreen('menuScreen');
+      } else {
+        alert('Incorrect password, try again');
+        input = '';
+        document.getElementById('inputDisplay').textContent = '••••';
+      }
+    }
+  }
+
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  function openImage(imageId) {
+    showScreen(imageId);
+  }
+
+  function goBack() {
+    showScreen('menuScreen');
+  }
+</script>
+<script>
+  function createSparkle() {
+    const sparkle = document.createElement('div');
+    sparkle.className = 'sparkle';
+    sparkle.style.left = Math.random() * window.innerWidth + 'px';
+    sparkle.style.top = window.innerHeight + 'px';
+    document.body.appendChild(sparkle);
+    setTimeout(() => sparkle.remove(), 4000);
+  }
+
+  setInterval(createSparkle, 50);
+</script>
+<script>
+  function createHeart(x, y) {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.style.left = x + 'px';
+    heart.style.top = y + 'px';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 1500);
+  }
+
+  // 💖 Touch = trailing hearts
+  document.addEventListener('touchmove', e => {
+    for (let touch of e.touches) {
+      createHeart(touch.clientX, touch.clientY);
+    }
+  });
+
+  // 💥 Click = burst of hearts
+  document.addEventListener('click', e => {
+    for (let i = 0; i < 8; i++) {
+      const offsetX = (Math.random() - 0.5) * 40;
+      const offsetY = (Math.random() - 0.5) * 40;
+      createHeart(e.clientX + offsetX, e.clientY + offsetY);
+    }
+  });
+</script>
+</body>
+</html>
