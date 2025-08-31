@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
 <style>
   .sparkle {
     position: fixed;
@@ -184,6 +185,129 @@
     opacity: 0;
   }
 }
+.handwritten {
+  font-family: 'Sacramento', cursive;
+  font-size: 1.8rem;
+  line-height: 1.6;
+  color: #444;
+  white-space: pre-wrap;
+}
+
+#typedMessage {
+  height: 600px;
+  width: 600px;
+  overflow-y: hidden;
+}
+#typedText {
+  font-family: 'Sacramento', cursive;
+  font-size: 2.8rem;
+  color: #ff66a3;
+  white-space: pre-wrap;
+  text-align: center;
+  margin-bottom: 40px;
+  min-height: 80px;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.cake {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 300px;
+}
+
+.layer {
+  background: pink;
+  border-radius: 10px;
+  opacity: 0;
+  animation: buildLayer 0.6s forwards;
+  margin-bottom: 8px;
+}
+
+.layer1 {
+  width: 180px;
+  height: 60px;
+  background: #6495ED;
+  animation-delay: 0.5s;
+}
+
+.layer2 {
+  width: 140px;
+  height: 50px;
+  background: #87CEEB;
+  animation-delay: 1.2s;
+}
+
+.layer3 {
+  width: 100px;
+  height: 40px;
+  background: #F0F8FF;
+  animation-delay: 1.9s;
+  position: relative;
+}
+
+@keyframes buildLayer {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.candles {
+  display: flex;
+  gap: 12px;
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  animation: showCandles 0.5s forwards;
+  animation-delay: 2.6s;
+}
+
+@keyframes showCandles {
+  to { opacity: 1; }
+}
+
+.candle {
+  width: 10px;
+  height: 30px;
+  background: #ffcc99;
+  border-radius: 2px;
+  position: relative;
+}
+
+.flame {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 10px;
+  height: 15px;
+  background: radial-gradient(circle, #ffcc00, #ff6600);
+  border-radius: 50%;
+  animation: flicker 0.3s infinite alternate;
+}
+
+.smoke-puff {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(160,160,160,0.6);
+  border-radius: 50%;
+  animation: smokeRise 2.5s ease-out forwards;
+}
+
+@keyframes flicker {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.2); opacity: 0.8; }
+}
+
+@keyframes smokeRise {
+  0% { transform: translateY(0) scale(1); opacity: 0.6; }
+  100% { transform: translateY(-40px) scale(1.8); opacity: 0; }
+}
 </style>
 </head>
 <body>
@@ -210,7 +334,7 @@
 <!-- Main Menu Screen -->
 <div id="menuScreen" class="screen menu">
 <div style="background: #ffe6f0; padding: 10px; border-radius: 16px; box-shadow: 0 0 12px #ffb6c1;">
-  <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/6lCR7CNOC51Oj2IEaa1qvg" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+  <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/1QlvHXMDoZHNx3VwYjbIld?utm_source=generator" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 </div>
   <div>
     <h1>🪷  My birthday Gallery 🪷</h1>
@@ -218,9 +342,10 @@
   </div>
   <div class="button-grid">
     <button class="menu-button" onclick="openImage('msg1')">💌 A Message</button>
-    <button class="menu-button" onclick="openImage('img2')">2</button>
-    <button class="menu-button" onclick="openImage('img3')">3</button>
-    <button class="menu-button" onclick="openImage('img4')">4</button>
+    <button class="menu-button" onclick="openImage('img2')">Soda Pop</button>
+    <button class="menu-button" onclick="openImage('img3')">Smile</button>
+    <button class="menu-button" onclick="openImage('img4')">Just Guitar</button>
+    <button class="menu-button" onclick="openImage('cakeScreen')">🎂 </button>
   </div>
 </div>
 
@@ -229,30 +354,44 @@
 <div id="msg1" class="screen image-screen">
   <div style="max-width: 600px; background-color: rgba(255,255,255,0.85); padding: 30px; border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.1);">
     <h2 style="color: #ff66a3; font-size: 1.8rem; margin-bottom: 20px;">🎂 Happy Birthday, Autumn 🎂</h2>
-    <p style="font-size: 1.1rem; line-height: 1.6; color: #444;">
-      I truly hope this year brings you nothing but the kind of love and peace you deserve. You’re someone with a big heart and a sharp mind, and I know you’re meant to be surrounded by people who can see that and love you without conditions.<br><br>
-      My wish for you is that this year gives you more joy, more laughter, and more of the kind of moments that remind you you’re not alone in this world.<br><br>
-      You deserve all of that and more. Wishing you the very best always.
-    </p>
-    <button class="back-button" onclick="goBack()">⬅ Back to Menu</button>
+    <p id="typedMessage" class="handwritten"></p>
+    <button class="back-button" onclick="goBack()"> Back to Menu</button>
   </div>
 </div>
 <div id="img2" class="screen image-screen">
-  <img src="https://placekitten.com/801/500" alt=
-  Image 2"/>
-  <button class="back-button" onclick="goBack()">⬅ Back to Menu</button>
+  <img src="Images/sodapop.png" alt="Soda Pop" class="galleryImage"/>
+  <button class="back-button" onclick="goBack()"> Back to Menu</button>
 </div>
 
 <div id="img3" class="screen image-screen">
-  <img src="https://placekitten.com/802/500" alt="Image 3"/>
-  <button class="back-button" onclick="goBack()">⬅ Back to Menu</button>
+  <img src="Images/bigsmile.png" alt="Big Smile" class="galleryImage"/>
+  <button class="back-button" onclick="goBack()"> Back to Menu</button>
 </div>
 
 <div id="img4" class="screen image-screen">
-  <img src="https://placekitten.com/803/500" alt="Image 4"/>
-  <button class="back-button" onclick="goBack()">⬅ Back to Menu</button>
+  <img src="Images/justguitar.png" alt="Guitar" class="galleryImage"/>
+  <button class="back-button" onclick="goBack()"> Back to Menu</button>
 </div>
+<!-- Cake Animation Screen -->
+<div id="cakeScreen" class="screen image-screen">
+  <h1 id="typedText"></h1>
 
+  <div class="cake">
+    <div class="layer layer3">
+      <div class="candles">
+        <div class="candle"><div class="flame"></div></div>
+        <div class="candle"><div class="flame"></div></div>
+        <div class="candle"><div class="flame"></div></div>
+        <div class="candle"><div class="flame"></div></div>
+        <div class="candle"><div class="flame"></div></div>
+      </div>
+    </div>
+    <div class="layer layer2"></div>
+    <div class="layer layer1"></div>
+  </div>
+
+  <button class="back-button" onclick="goBack()"> Back to Menu</button>
+</div>
 <script>
   const correctPassword = '1909'; // change as desired
   let input = '';
@@ -321,6 +460,56 @@
       createHeart(e.clientX + offsetX, e.clientY + offsetY);
     }
   });
+</script>
+<script>
+  const messageText = `I truly hope this year brings you nothing but the kind of love and peace you deserve. You’re someone with a big heart and a sharp mind, and I know you’re meant to be surrounded by people who can see that and love you without conditions.
+
+My wish for you is that this year gives you more joy, more laughter, and more of the kind of moments that remind you you’re not alone in this world.
+
+You deserve all of that and more. Wishing you the very best always.`;
+
+  let i = 0;
+  function typeMessage() {
+    if (i < messageText.length) {
+      document.getElementById("typedMessage").textContent += messageText.charAt(i);
+      i++;
+      setTimeout(typeMessage, 50); // speed of typing
+    }
+  }
+
+  // Trigger animation when message screen is shown
+  function openImage(imageId) {
+    showScreen(imageId);
+    if (imageId === 'msg1') {
+      document.getElementById("typedMessage").textContent = '';
+      i = 0;
+      setTimeout(typeMessage, 300); // delay before typing starts
+    }
+  }
+</script>
+<script>
+  function openImage(imageId) {
+    showScreen(imageId);
+
+    if (imageId === 'msg1') {
+      const msgEl = document.getElementById("typedMessage");
+      if (msgEl) {
+        msgEl.textContent = '';
+        messageIndex = 0;
+        setTimeout(typeMessage, 300);
+      }
+    }
+
+    if (imageId === 'cakeScreen') {
+      const cakeEl = document.getElementById("typedText");
+      if (cakeEl) {
+        cakeEl.textContent = '';
+        cakeIndex = 0;
+        setTimeout(typeWriter, 3200);
+        startSmoke();
+      }
+    }
+  }
 </script>
 </body>
 </html>
